@@ -111,7 +111,7 @@ resource "null_resource" "initialize_db" {
 
   provisioner "local-exec" {
     command = <<EOT
-      PGPASSWORD="mypassword" psql -h ${google_sql_database_instance.postgres_instance.public_ip_address} -U postgres -d my-db -c "GRANT ALL PRIVILEGES ON DATABASE my-db TO admin1;" -c "\\c my-db;" -c "GRANT USAGE ON SCHEMA public TO admin1;" -c "GRANT ALL PRIVILEGES ON SCHEMA public TO admin1;"
+      PGPASSWORD="test123" psql -h ${google_sql_database_instance.postgres_instance.public_ip_address} -U postgres -d my-db -c "GRANT ALL PRIVILEGES ON DATABASE my-db TO admin1;" -c "\\c my-db;" -c "GRANT USAGE ON SCHEMA public TO admin1;" -c "GRANT ALL PRIVILEGES ON SCHEMA public TO admin1;"
     EOT
   }
 }
@@ -141,17 +141,4 @@ resource "google_container_cluster" "gke_cluster" {
   lifecycle {
     prevent_destroy = false # Disable Terraform protection
   }
-}
-
-# Outputs
-output "network_name" {
-  value = google_compute_network.vpc_network.name
-}
-
-output "database_ip" {
-  value = google_sql_database_instance.postgres_instance.public_ip_address
-}
-
-output "cluster_endpoint" {
-  value = google_container_cluster.gke_cluster.endpoint
 }
