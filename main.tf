@@ -106,8 +106,8 @@ resource "google_sql_user" "postgres" {
 # Script to run SQL commands for granting privileges and schema access
 resource "null_resource" "initialize_db" {
   depends_on = [
-    google_sql_user.myuser,
-    google_sql_database.myappdb
+    google_sql_user.admin1,
+    google_sql_database.my-db,
   ]
 
   provisioner "local-exec" {
@@ -146,7 +146,7 @@ resource "google_container_cluster" "gke_cluster" {
 
 # Outputs
 output "network_name" {
-  value = google_compute_network.assignment_network.name
+  value = google_compute_network.vpc_network.name
 }
 
 output "database_ip" {
