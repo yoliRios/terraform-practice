@@ -24,7 +24,6 @@ resource "google_compute_network" "vpc_network" {
   auto_create_subnetworks = false
   mtu                     = 1460
 }
-
 # Create a subnet
 resource "google_compute_subnetwork" "default" {
   name          = "my-subnet"
@@ -120,7 +119,7 @@ resource "null_resource" "initialize_db" {
 # GKE Cluster
 resource "google_container_cluster" "gke_cluster" {
   name       = "my-cluster"
-  location   = "us-central1-a"
+  location   = "us-central1"
   network    = google_compute_network.vpc_network.id
   subnetwork = google_compute_subnetwork.default.id
   deletion_protection = false
